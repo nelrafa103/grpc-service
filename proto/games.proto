@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package games;
+
+message Game {
+  int32 id = 1;
+  Cover cover = 2;
+  string name = 3;
+  string summary = 4;
+  string url = 5;
+  repeated int32 websites = 6;
+  repeated Genre genres = 7;
+}
+
+message Cover {
+  int32 id = 1;
+  string url = 2;
+}
+
+message Genre {
+  int32 id = 1;
+  string name = 2;
+}
+
+message Empty {
+}
+
+
+message GamesList {
+  repeated Game games = 1;
+}
+
+message Section {
+  int32 offset = 1;
+  int32 limit = 2;
+}
+
+message byId {
+  int32 id = 1;
+}
+
+service GamesService {
+    rpc FindAll(Section) returns (GamesList);
+    rpc FindBy(Search) returns (GamesList);
+    rpc FindById(byId) returns (GamesList);
+}
+
+message Search {
+  optional string name = 1;
+  required int32 limit = 2;
+  required int32 offset = 3;
+  repeated string genres = 4;
+  repeated string platforms = 5;
+  repeated string developers = 6;
+  repeated string publishers = 7;
+}
+ 
+
